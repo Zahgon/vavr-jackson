@@ -34,8 +34,7 @@ import tools.jackson.databind.type.MapLikeType;
 
 class MapDeserializer extends MaplikeDeserializer<Map<?, ?>> {
 
-    MapDeserializer(MapLikeType mapType, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer,
-                    ValueDeserializer<?> elementDeserializer) {
+    MapDeserializer(MapLikeType mapType, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
         super(mapType, keyDeserializer, elementTypeDeserializer, elementDeserializer);
     }
 
@@ -44,50 +43,26 @@ class MapDeserializer extends MaplikeDeserializer<Map<?, ?>> {
     }
 
     @Override
-    MaplikeDeserializer<Map<?, ?>> createDeserializer(KeyDeserializer keyDeserializer,
-                                                      TypeDeserializer elementTypeDeserializer,
-                                                      ValueDeserializer<?> valueDeserializer) {
-        return new MapDeserializer(this, keyDeserializer, elementTypeDeserializer, valueDeserializer);
+    MaplikeDeserializer<Map<?, ?>> createDeserializer(KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> valueDeserializer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Map<?, ?> deserialize(JsonParser p, DeserializationContext ctxt, Map<?, ?> intoValue) {
-        final java.util.LinkedHashMap<Object, Object> result = new java.util.LinkedHashMap<>();
-        if (intoValue != null) {
-            result.putAll(intoValue.toJavaMap());
-        }
-        while (p.nextToken() != JsonToken.END_OBJECT) {
-            String name = p.currentName();
-            Object key = keyDeserializer.deserializeKey(name, ctxt);
-            JsonToken t = p.nextToken();
-            Object value = deserializeValue(p, ctxt, intoValue, t, result, key);
-            result.put(key, value);
-        }
-        if (SortedMap.class.isAssignableFrom(handledType())) {
-            return TreeMap.ofAll(keyComparator, result);
-        }
-        if (LinkedHashMap.class.isAssignableFrom(handledType())) {
-            return LinkedHashMap.ofAll(result);
-        }
-        // default deserialization [...] -> Map
-        return HashMap.ofAll(result);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private Object deserializeValue(JsonParser p, DeserializationContext ctxt, Map<?, ?> intoValue, JsonToken t, java.util.LinkedHashMap<Object, Object> result, Object key) {
         if (t == JsonToken.VALUE_NULL) {
             return elementDeserializer.getNullValue(ctxt);
         }
-
         if (elementTypeDeserializer == null) {
             if (intoValue != null) {
-                return result.containsKey(key)
-                    ? elementDeserializer.deserialize(p, ctxt, cast(result.get(key)))
-                    : elementDeserializer.deserialize(p, ctxt);
+                return result.containsKey(key) ? elementDeserializer.deserialize(p, ctxt, cast(result.get(key))) : elementDeserializer.deserialize(p, ctxt);
             } else {
                 return elementDeserializer.deserialize(p, ctxt);
             }
         }
-
         if (intoValue != null) {
             return elementDeserializer.deserializeWithType(p, ctxt, elementTypeDeserializer, cast(result.getOrDefault(key, null)));
         } else {
@@ -97,7 +72,7 @@ class MapDeserializer extends MaplikeDeserializer<Map<?, ?>> {
 
     @Override
     public Map<?, ?> deserialize(JsonParser p, DeserializationContext ctxt) {
-        return deserialize(p, ctxt, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static <T> T cast(Object o) {

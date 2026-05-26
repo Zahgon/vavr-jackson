@@ -35,7 +35,6 @@ import tools.jackson.core.JsonToken;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.ValueDeserializer;
-
 import static tools.jackson.core.JsonToken.END_ARRAY;
 import static tools.jackson.core.JsonToken.VALUE_NULL;
 
@@ -50,22 +49,7 @@ class TupleDeserializer extends VavrValueDeserializer<Tuple> {
 
     @Override
     public Tuple deserialize(JsonParser p, DeserializationContext ctxt) {
-        List<Object> list = new ArrayList<>();
-        int ptr = 0;
-
-        for (JsonToken jsonToken = p.nextToken(); jsonToken != END_ARRAY; jsonToken = p.nextToken()) {
-            if (ptr >= deserializersCount()) {
-                throw mappingException(ctxt, javaType.getRawClass(), jsonToken);
-            }
-            ValueDeserializer<?> deserializer = deserializer(ptr++);
-            Object value = (jsonToken != VALUE_NULL) ? deserializer.deserialize(p, ctxt) : deserializer.getNullValue(ctxt);
-            list.add(value);
-        }
-        if (list.size() == deserializersCount()) {
-            return create(list);
-        } else {
-            throw mappingException(ctxt, javaType.getRawClass(), null);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static int arity(JavaType valueType) {
@@ -92,17 +76,27 @@ class TupleDeserializer extends VavrValueDeserializer<Tuple> {
     }
 
     private Tuple create(List<Object> list) {
-        return switch (list.size()) {
-            case 0 -> Tuple.empty();
-            case 1 -> Tuple.of(list.get(0));
-            case 2 -> Tuple.of(list.get(0), list.get(1));
-            case 3 -> Tuple.of(list.get(0), list.get(1), list.get(2));
-            case 4 -> Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3));
-            case 5 -> Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
-            case 6 -> Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5));
-            case 7 -> Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6));
-            case 8 -> Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6), list.get(7));
-            default -> throw new IllegalArgumentException("Unsupported tuple arity: " + list.size());
+        return switch(list.size()) {
+            case 0 ->
+                Tuple.empty();
+            case 1 ->
+                Tuple.of(list.get(0));
+            case 2 ->
+                Tuple.of(list.get(0), list.get(1));
+            case 3 ->
+                Tuple.of(list.get(0), list.get(1), list.get(2));
+            case 4 ->
+                Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3));
+            case 5 ->
+                Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+            case 6 ->
+                Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5));
+            case 7 ->
+                Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6));
+            case 8 ->
+                Tuple.of(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4), list.get(5), list.get(6), list.get(7));
+            default ->
+                throw new IllegalArgumentException("Unsupported tuple arity: " + list.size());
         };
     }
 }

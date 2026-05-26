@@ -32,8 +32,7 @@ import tools.jackson.databind.jsontype.TypeDeserializer;
 
 class SetDeserializer extends ArrayDeserializer<Set<?>> {
 
-    SetDeserializer(JavaType collectionType, JavaType elementType, TypeDeserializer elementTypeDeserializer,
-                    ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
+    SetDeserializer(JavaType collectionType, JavaType elementType, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
         super(collectionType, 1, elementType, elementTypeDeserializer, elementDeserializer, deserializeNullAsEmptyCollection);
     }
 
@@ -44,28 +43,18 @@ class SetDeserializer extends ArrayDeserializer<Set<?>> {
      * @param elementTypeDeserializer the new deserializer for the element type
      * @param elementDeserializer     the new deserializer for the element itself
      */
-    private SetDeserializer(SetDeserializer origin, TypeDeserializer elementTypeDeserializer,
-                            ValueDeserializer<?> elementDeserializer) {
-        this(origin.collectionType, origin.elementType, elementTypeDeserializer, elementDeserializer,
-            origin.deserializeNullAsEmptyCollection);
+    private SetDeserializer(SetDeserializer origin, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
+        this(origin.collectionType, origin.elementType, elementTypeDeserializer, elementDeserializer, origin.deserializeNullAsEmptyCollection);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     Set<?> create(List<Object> result, DeserializationContext ctx) throws DatabindException {
-        if (io.vavr.collection.SortedSet.class.isAssignableFrom(collectionType.getRawClass())) {
-            checkContainedTypeIsComparable(ctx, collectionType.containedTypeOrUnknown(0));
-            return io.vavr.collection.TreeSet.ofAll((Comparator<Object> & Serializable) (o1, o2) -> ((Comparable) o1).compareTo(o2), result);
-        }
-        if (io.vavr.collection.LinkedHashSet.class.isAssignableFrom(collectionType.getRawClass())) {
-            return io.vavr.collection.LinkedHashSet.ofAll(result);
-        }
-        // default deserialization [...] -> Set
-        return HashSet.ofAll(result);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     SetDeserializer createDeserializer(TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
-        return new SetDeserializer(this, elementTypeDeserializer, elementDeserializer);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

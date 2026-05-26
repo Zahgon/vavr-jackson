@@ -35,17 +35,12 @@ class TupleSerializer extends HListSerializer<Tuple> {
 
     @Override
     public void serialize(Tuple value, JsonGenerator gen, SerializationContext context) {
-        gen.writeStartArray();
-        serializeContents(value, gen, context);
-        gen.writeEndArray();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public void serializeWithType(Tuple value, JsonGenerator gen, SerializationContext context,
-                                  TypeSerializer typeSer) {
-        typeSer.writeTypePrefix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
-        serializeContents(value, gen, context);
-        typeSer.writeTypeSuffix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
+    public void serializeWithType(Tuple value, JsonGenerator gen, SerializationContext context, TypeSerializer typeSer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void serializeContents(Tuple value, JsonGenerator gen, SerializationContext context) {

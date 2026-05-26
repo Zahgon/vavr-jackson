@@ -33,6 +33,7 @@ import tools.jackson.databind.type.TypeFactory;
 abstract class VavrValueSerializer<T> extends StdSerializer<T> {
 
     final JavaType type;
+
     final BeanProperty beanProperty;
 
     VavrValueSerializer(JavaType type) {
@@ -51,30 +52,11 @@ abstract class VavrValueSerializer<T> extends StdSerializer<T> {
 
     @Override
     public void serialize(T value, JsonGenerator gen, SerializationContext context) {
-        Object obj = toJavaObj(value);
-        if (obj == null) {
-            context.getDefaultNullValueSerializer().serialize(null, gen, context);
-        } else {
-            ValueSerializer<Object> ser;
-            try {
-                JavaType emulated = emulatedJavaType(context.getTypeFactory());
-                if (emulated.getRawClass() != Object.class) {
-                    ser = context.findPrimaryPropertySerializer(emulated, beanProperty);
-                } else {
-                    ser = context.findPrimaryPropertySerializer(obj.getClass(), beanProperty);
-                }
-            } catch (JacksonException ignore) {
-                ser = context.findPrimaryPropertySerializer(obj.getClass(), beanProperty);
-            }
-            ser.serialize(obj, gen, context);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public void serializeWithType(T value, JsonGenerator gen, SerializationContext context,
-                                  TypeSerializer typeSer) {
-        typeSer.writeTypePrefix(gen, context, typeSer.typeId(value, JsonToken.VALUE_STRING));
-        serialize(value, gen, context);
-        typeSer.writeTypeSuffix(gen, context, typeSer.typeId(value, JsonToken.VALUE_STRING));
+    public void serializeWithType(T value, JsonGenerator gen, SerializationContext context, TypeSerializer typeSer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

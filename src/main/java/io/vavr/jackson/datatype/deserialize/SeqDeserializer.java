@@ -34,8 +34,7 @@ import tools.jackson.databind.jsontype.TypeDeserializer;
 
 class SeqDeserializer extends ArrayDeserializer<Seq<?>> {
 
-    SeqDeserializer(JavaType collectionType, JavaType elementType, TypeDeserializer elementTypeDeserializer,
-                    ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
+    SeqDeserializer(JavaType collectionType, JavaType elementType, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
         super(collectionType, 1, elementType, elementTypeDeserializer, elementDeserializer, deserializeNullAsEmptyCollection);
     }
 
@@ -46,36 +45,17 @@ class SeqDeserializer extends ArrayDeserializer<Seq<?>> {
      * @param elementTypeDeserializer the new deserializer for the element type
      * @param elementDeserializer     the new deserializer for the element itself
      */
-    private SeqDeserializer(SeqDeserializer origin, TypeDeserializer elementTypeDeserializer,
-                            ValueDeserializer<?> elementDeserializer) {
-        this(origin.collectionType, origin.elementType, elementTypeDeserializer, elementDeserializer,
-            origin.deserializeNullAsEmptyCollection);
+    private SeqDeserializer(SeqDeserializer origin, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
+        this(origin.collectionType, origin.elementType, elementTypeDeserializer, elementDeserializer, origin.deserializeNullAsEmptyCollection);
     }
 
     @Override
     Seq<?> create(List<Object> result, DeserializationContext ctxt) throws DatabindException {
-        if (Array.class.isAssignableFrom(collectionType.getRawClass())) {
-            return Array.ofAll(result);
-        }
-        if (Queue.class.isAssignableFrom(collectionType.getRawClass())) {
-            return Queue.ofAll(result);
-        }
-        if (Stream.class.isAssignableFrom(collectionType.getRawClass())) {
-            return Stream.ofAll(result);
-        }
-        if (Vector.class.isAssignableFrom(collectionType.getRawClass())) {
-            return Vector.ofAll(result);
-        }
-        if (IndexedSeq.class.isAssignableFrom(collectionType.getRawClass())) {
-            return Array.ofAll(result);
-        }
-        // default deserialization [...] -> Seq
-        return io.vavr.collection.List.ofAll(result);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     SeqDeserializer createDeserializer(TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
-        return new SeqDeserializer(this, elementTypeDeserializer, elementDeserializer);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

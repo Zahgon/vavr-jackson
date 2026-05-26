@@ -39,16 +39,11 @@ class CharSeqDeserializer extends StdDeserializer<CharSeq> {
 
     @Override
     public CharSeq deserialize(JsonParser p, DeserializationContext ctxt) {
-        Object obj = deserializer.deserialize(p, ctxt);
-        if (obj instanceof String) {
-            return CharSeq.of((String) obj);
-        } else {
-            throw DatabindException.from(p, String.format("Unexpected token (%s), expected %s: CharSeq can only be deserialized from String", p.currentToken(), JsonToken.VALUE_STRING));
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void resolve(DeserializationContext ctxt) throws DatabindException {
-        deserializer = ctxt.findContextualValueDeserializer(TypeFactory.unknownType(), null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

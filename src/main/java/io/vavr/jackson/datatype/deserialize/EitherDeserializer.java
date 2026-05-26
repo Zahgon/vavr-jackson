@@ -26,7 +26,6 @@ import tools.jackson.databind.DatabindException;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.ValueDeserializer;
-
 import static tools.jackson.core.JsonToken.END_ARRAY;
 import static tools.jackson.core.JsonToken.END_OBJECT;
 import static tools.jackson.core.JsonToken.START_ARRAY;
@@ -36,6 +35,7 @@ import static tools.jackson.core.JsonToken.VALUE_NULL;
 class EitherDeserializer extends VavrValueDeserializer<Either<?, ?>> {
 
     private final JavaType javaType;
+
     private volatile ValueDeserializer<?> stringDeserializer;
 
     EitherDeserializer(JavaType valueType) {
@@ -45,57 +45,12 @@ class EitherDeserializer extends VavrValueDeserializer<Either<?, ?>> {
 
     @Override
     public Either<?, ?> deserialize(JsonParser p, DeserializationContext ctxt) {
-        final JsonToken nextToken = p.currentToken();
-
-        if (nextToken == START_ARRAY) {
-            boolean right = false;
-            Object value = null;
-            int cnt = 0;
-
-            for (JsonToken jsonToken = p.nextToken(); jsonToken != END_ARRAY; jsonToken = p.nextToken()) {
-                cnt++;
-                switch (cnt) {
-                    case 1:
-                        String def = (String) stringDeserializer.deserialize(p, ctxt);
-                        if (isRight(def)) {
-                            right = true;
-                        } else if (isLeft(def)) {
-                            right = false;
-                        } else {
-                            throw mappingException(ctxt, javaType.getRawClass(), jsonToken);
-                        }
-                        break;
-                    case 2:
-                        ValueDeserializer<?> deserializer = right ? deserializer(1) : deserializer(0);
-                        value = (jsonToken != VALUE_NULL) ? deserializer.deserialize(p, ctxt) : deserializer.getNullValue(ctxt);
-                        break;
-                }
-            }
-            if (cnt != 2) {
-                throw mappingException(ctxt, javaType.getRawClass(), null);
-            }
-            return right ? Either.right(value) : Either.left(value);
-        } else if (nextToken == START_OBJECT) {
-            final JsonToken currentToken = p.currentToken();
-            final String type = p.nextName();
-            if (isRight(type)) {
-                return Either.right(parseObject(p, ctxt, 1));
-            } else if (isLeft(type)) {
-                return Either.left(parseObject(p, ctxt, 0));
-            } else {
-                throw mappingException(ctxt, javaType.getRawClass(), currentToken);
-            }
-        } else {
-            throw mappingException(ctxt, javaType.getRawClass(), p.currentToken());
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
-
 
     @Override
     public void resolve(DeserializationContext ctxt) throws DatabindException {
-        super.resolve(ctxt);
-        stringDeserializer = ctxt.findContextualValueDeserializer(ctxt.constructType(String.class), null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static boolean isRight(final String fieldName) {

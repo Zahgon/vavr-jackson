@@ -31,21 +31,22 @@ import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.jsontype.TypeDeserializer;
-
 import static tools.jackson.core.JsonToken.END_ARRAY;
 import static tools.jackson.core.JsonToken.VALUE_NULL;
 
 abstract class ArrayDeserializer<T> extends VavrValueDeserializer<T> {
 
     protected final JavaType collectionType;
+
     protected final JavaType elementType;
+
     protected final TypeDeserializer elementTypeDeserializer;
+
     protected final ValueDeserializer<?> elementDeserializer;
+
     protected final boolean deserializeNullAsEmptyCollection;
 
-    ArrayDeserializer(JavaType collectionType, int typeCount, JavaType elementType,
-                      TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer,
-                      boolean deserializeNullAsEmptyCollection) {
+    ArrayDeserializer(JavaType collectionType, int typeCount, JavaType elementType, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
         super(collectionType, typeCount);
         this.collectionType = collectionType;
         this.elementType = elementType;
@@ -64,70 +65,29 @@ abstract class ArrayDeserializer<T> extends VavrValueDeserializer<T> {
      *
      * @return a new deserializer
      */
-    abstract ArrayDeserializer<T> createDeserializer(TypeDeserializer elementTypeDeserializer,
-                                                     ValueDeserializer<?> elementDeserializer);
+    abstract ArrayDeserializer<T> createDeserializer(TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer);
 
     @Override
     public ValueDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws DatabindException {
-        ValueDeserializer<?> elementDeser = elementDeserializer;
-        TypeDeserializer elementTypeDeser = elementTypeDeserializer;
-
-        if (elementDeser == null) {
-            elementDeser = ctxt.findContextualValueDeserializer(elementType, property);
-        } else {
-            elementDeser = ctxt.handleSecondaryContextualization(elementDeser, property, elementType);
-        }
-        if (elementTypeDeser != null) {
-            elementTypeDeser = elementTypeDeser.forProperty(property);
-        }
-        return createDeserializer(elementTypeDeser, elementDeser);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public T deserialize(JsonParser parser, DeserializationContext context, T intoValue) {
-        if (!parser.isExpectedStartArrayToken()) {
-            throw mappingException(context, collectionType.getRawClass(), parser.currentToken());
-        }
-
-        List<Object> elements = new ArrayList<>();
-
-        if (intoValue instanceof Traversable) {
-            for (Object o : ((Traversable<?>) intoValue)) {
-                elements.add(o);
-            }
-        }
-
-        for (JsonToken jsonToken = parser.nextToken(); jsonToken != END_ARRAY; jsonToken = parser.nextToken()) {
-            Object element;
-            if (jsonToken == VALUE_NULL) {
-                element = elementDeserializer.getNullValue(context);
-            } else if (elementTypeDeserializer == null) {
-                element = elementDeserializer.deserialize(parser, context);
-            } else {
-                element = elementDeserializer.deserializeWithType(parser, context, elementTypeDeserializer);
-            }
-            elements.add(element);
-        }
-        return create(elements, context);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public T deserialize(JsonParser parser, DeserializationContext context) {
-        return deserialize(parser, context, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public T getNullValue(DeserializationContext ctxt) throws DatabindException {
-        if (deserializeNullAsEmptyCollection) {
-            return create(Collections.emptyList(), ctxt);
-        }
-        return (T) super.getNullValue(ctxt);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static void checkContainedTypeIsComparable(DeserializationContext ctxt, JavaType type) throws DatabindException {
-        Class<?> clz = type.getRawClass();
-        if (clz == Object.class || !Comparable.class.isAssignableFrom(clz)) {
-            throw mappingException(ctxt, clz, null);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

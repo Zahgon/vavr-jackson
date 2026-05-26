@@ -67,35 +67,28 @@ public class VavrModule extends SimpleModule {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public static final List<Class<?>> FUNCTION_TYPES = List.of(
-        Function0.class, Function1.class, Function2.class, Function3.class,
-        Function4.class, Function5.class, Function6.class, Function7.class, Function8.class,
-        CheckedFunction0.class, CheckedFunction1.class, CheckedFunction2.class, CheckedFunction3.class,
-        CheckedFunction4.class, CheckedFunction5.class, CheckedFunction6.class, CheckedFunction7.class,
-        CheckedFunction8.class
-    );
+    public static final List<Class<?>> FUNCTION_TYPES = List.of(Function0.class, Function1.class, Function2.class, Function3.class, Function4.class, Function5.class, Function6.class, Function7.class, Function8.class, CheckedFunction0.class, CheckedFunction1.class, CheckedFunction2.class, CheckedFunction3.class, CheckedFunction4.class, CheckedFunction5.class, CheckedFunction6.class, CheckedFunction7.class, CheckedFunction8.class);
 
     public static class Settings {
 
         private boolean plainOption = true;
+
         private boolean deserializeNullAsEmptyCollection = false;
 
         public Settings useOptionInPlainFormat(boolean value) {
-            plainOption = value;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public Settings deserializeNullAsEmptyCollection(boolean value) {
-            deserializeNullAsEmptyCollection = value;
-            return this;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public boolean useOptionInPlainFormat() {
-            return plainOption;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
 
         public boolean deserializeNullAsEmptyCollection() {
-            return deserializeNullAsEmptyCollection;
+            throw new UnsupportedOperationException("STUB: not implemented");
         }
     }
 
@@ -112,9 +105,6 @@ public class VavrModule extends SimpleModule {
 
     @Override
     public void setupModule(SetupContext context) {
-        super.setupModule(context);
-        context.addSerializers(new VavrSerializers(settings));
-        context.addDeserializers(new VavrDeserializers(settings));
-        context.addTypeModifier(new VavrTypeModifier());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

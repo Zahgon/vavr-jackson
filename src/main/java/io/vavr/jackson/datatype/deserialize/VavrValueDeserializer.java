@@ -31,7 +31,9 @@ import tools.jackson.databind.deser.std.StdDeserializer;
 abstract class VavrValueDeserializer<T> extends StdDeserializer<T> {
 
     private final JavaType javaType;
+
     private final int typeCount;
+
     private final List<ValueDeserializer<Object>> deserializers;
 
     VavrValueDeserializer(JavaType valueType, int typeCount) {
@@ -42,31 +44,20 @@ abstract class VavrValueDeserializer<T> extends StdDeserializer<T> {
     }
 
     int deserializersCount() {
-        return deserializers.size();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     ValueDeserializer<Object> deserializer(int index) {
-        return deserializers.get(index);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void resolve(DeserializationContext ctxt) throws DatabindException {
-        // TODO rewrite this
-        if (javaType.isCollectionLikeType() || javaType.isReferenceType()) {
-            deserializers.add(ctxt.findRootValueDeserializer(javaType.getContentType()));
-            return;
-        }
-        for (int i = 0; i < typeCount; i++) {
-            JavaType containedType = javaType.containedTypeOrUnknown(i);
-            deserializers.add(ctxt.findRootValueDeserializer(containedType));
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     static DatabindException mappingException(DeserializationContext ctxt, Class<?> targetClass, JsonToken token) {
-        String tokenDesc = (token == null) ? "<end of input>" : String.format("%s token", token);
-        return DatabindException.from(ctxt.getParser(),
-            String.format("Can not deserialize instance of %s out of %s",
-                _calcName(targetClass), tokenDesc));
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private static String _calcName(Class<?> cls) {

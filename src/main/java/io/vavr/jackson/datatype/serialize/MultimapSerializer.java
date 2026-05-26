@@ -46,27 +46,21 @@ class MultimapSerializer extends VavrValueSerializer<Multimap<?, ?>> {
 
     @Override
     Object toJavaObj(Multimap<?, ?> value) {
-        final LinkedHashMap<Object, List<Object>> result = new LinkedHashMap<>();
-        value.forEach(e -> result.computeIfAbsent(e._1, k -> new ArrayList<>()).add(e._2));
-        return result;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     JavaType emulatedJavaType(TypeFactory typeFactory) {
-        JavaType containerType = typeFactory.constructCollectionType(ArrayList.class, mapType.getContentType());
-        return typeFactory.constructMapType(LinkedHashMap.class, mapType.getKeyType(), containerType);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isEmpty(SerializationContext context, Multimap<?, ?> value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueSerializer<?> createContextual(SerializationContext context, BeanProperty property) throws DatabindException {
-        if (property == beanProperty) {
-            return this;
-        }
-        return new MultimapSerializer(mapType, property);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

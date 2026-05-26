@@ -51,83 +51,27 @@ public class VavrDeserializers extends Deserializers.Base {
     }
 
     @Override
-    public ValueDeserializer<?> findBeanDeserializer(JavaType type,
-                                                     DeserializationConfig config,
-                                                     BeanDescription.Supplier beanDesc) throws DatabindException {
-        Class<?> raw = type.getRawClass();
-        if (Either.class.isAssignableFrom(raw)) {
-            return new EitherDeserializer(type);
-        }
-
-        if (Tuple.class.isAssignableFrom(raw)) {
-            return new TupleDeserializer(type);
-        }
-
-        if (VavrModule.FUNCTION_TYPES.stream().anyMatch(t -> t.isAssignableFrom(raw))) {
-            return new SerializableDeserializer<>(type);
-        }
-
-        return super.findBeanDeserializer(type, config, beanDesc);
+    public ValueDeserializer<?> findBeanDeserializer(JavaType type, DeserializationConfig config, BeanDescription.Supplier beanDesc) throws DatabindException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public ValueDeserializer<?> findReferenceDeserializer(ReferenceType type,
-                                                         DeserializationConfig config, BeanDescription.Supplier beanDesc,
-                                                         TypeDeserializer contentTypeDeserializer, ValueDeserializer<?> contentDeserializer)
-        throws DatabindException {
-        Class<?> raw = type.getRawClass();
-        if (raw == Lazy.class) {
-            return new LazyDeserializer(type, type.getContentType(), contentTypeDeserializer, contentDeserializer);
-        }
-        if (raw == Option.class) {
-            return new OptionDeserializer(type, type.getContentType(), contentTypeDeserializer, contentDeserializer, settings.useOptionInPlainFormat());
-        }
-        return super.findReferenceDeserializer(type, config, beanDesc, contentTypeDeserializer, contentDeserializer);
+    public ValueDeserializer<?> findReferenceDeserializer(ReferenceType type, DeserializationConfig config, BeanDescription.Supplier beanDesc, TypeDeserializer contentTypeDeserializer, ValueDeserializer<?> contentDeserializer) throws DatabindException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public ValueDeserializer<?> findCollectionLikeDeserializer(CollectionLikeType collectionType,
-                                                              DeserializationConfig config, BeanDescription.Supplier beanDesc,
-                                                              TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer)
-        throws DatabindException {
-        Class<?> raw = collectionType.getRawClass();
-        if (raw == CharSeq.class) {
-            return new CharSeqDeserializer(collectionType);
-        }
-        if (Seq.class.isAssignableFrom(raw)) {
-            return new SeqDeserializer(collectionType, collectionType.getContentType(), elementTypeDeserializer,
-                elementDeserializer, settings.deserializeNullAsEmptyCollection());
-        }
-        if (Set.class.isAssignableFrom(raw)) {
-            return new SetDeserializer(collectionType, collectionType.getContentType(), elementTypeDeserializer,
-                elementDeserializer, settings.deserializeNullAsEmptyCollection());
-        }
-        if (PriorityQueue.class.isAssignableFrom(raw)) {
-            return new PriorityQueueDeserializer(collectionType, collectionType.getContentType(),
-                elementTypeDeserializer, elementDeserializer, settings.deserializeNullAsEmptyCollection());
-        }
-        return super.findCollectionLikeDeserializer(collectionType, config, beanDesc, elementTypeDeserializer, elementDeserializer);
+    public ValueDeserializer<?> findCollectionLikeDeserializer(CollectionLikeType collectionType, DeserializationConfig config, BeanDescription.Supplier beanDesc, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) throws DatabindException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public ValueDeserializer<?> findMapLikeDeserializer(MapLikeType type,
-                                                       DeserializationConfig config, BeanDescription.Supplier beanDesc,
-                                                       KeyDeserializer keyDeserializer,
-                                                       TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer)
-        throws DatabindException {
-        Class<?> raw = type.getRawClass();
-        if (Map.class.isAssignableFrom(raw)) {
-            return new MapDeserializer(type, keyDeserializer, elementTypeDeserializer, elementDeserializer);
-        }
-        if (Multimap.class.isAssignableFrom(raw)) {
-            return new MultimapDeserializer(type, keyDeserializer, elementTypeDeserializer, elementDeserializer);
-        }
-        return super.findMapLikeDeserializer(type, config, beanDesc, keyDeserializer, elementTypeDeserializer, elementDeserializer);
+    public ValueDeserializer<?> findMapLikeDeserializer(MapLikeType type, DeserializationConfig config, BeanDescription.Supplier beanDesc, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) throws DatabindException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean hasDeserializerFor(DeserializationConfig config, Class<?> valueType) {
-        Package pkg = valueType.getPackage();
-        return pkg != null && pkg.getName().startsWith("io.vavr");
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

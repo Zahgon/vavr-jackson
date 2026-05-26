@@ -34,17 +34,12 @@ class EitherSerializer extends HListSerializer<Either<?, ?>> {
 
     @Override
     public void serialize(Either<?, ?> value, JsonGenerator gen, SerializationContext context) {
-        gen.writeStartArray();
-        serializeContents(value, gen, context);
-        gen.writeEndArray();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public void serializeWithType(Either<?, ?> value, JsonGenerator gen, SerializationContext context,
-                                  TypeSerializer typeSer) {
-        typeSer.writeTypePrefix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
-        serializeContents(value, gen, context);
-        typeSer.writeTypeSuffix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
+    public void serializeWithType(Either<?, ?> value, JsonGenerator gen, SerializationContext context, TypeSerializer typeSer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private void serializeContents(Either<?, ?> value, JsonGenerator gen, SerializationContext context) {
@@ -59,6 +54,6 @@ class EitherSerializer extends HListSerializer<Either<?, ?>> {
 
     @Override
     public boolean isEmpty(SerializationContext context, Either<?, ?> value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

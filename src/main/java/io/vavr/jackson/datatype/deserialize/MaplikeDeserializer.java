@@ -32,17 +32,19 @@ import tools.jackson.databind.deser.std.StdDeserializer;
 import tools.jackson.databind.jsontype.TypeDeserializer;
 import tools.jackson.databind.type.MapLikeType;
 
-abstract class MaplikeDeserializer<T> extends StdDeserializer<T>  {
+abstract class MaplikeDeserializer<T> extends StdDeserializer<T> {
 
     final MapLikeType mapType;
 
     final Comparator<Object> keyComparator;
+
     final KeyDeserializer keyDeserializer;
+
     final TypeDeserializer elementTypeDeserializer;
+
     final ValueDeserializer<?> elementDeserializer;
 
-    MaplikeDeserializer(MapLikeType mapType, KeyDeserializer keyDeserializer,
-                        TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
+    MaplikeDeserializer(MapLikeType mapType, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
         super(mapType);
         this.mapType = mapType;
         this.keyComparator = createKeyComparator(mapType.getKeyType());
@@ -70,29 +72,10 @@ abstract class MaplikeDeserializer<T> extends StdDeserializer<T>  {
      *
      * @return a new deserializer
      */
-    abstract MaplikeDeserializer<T> createDeserializer(KeyDeserializer keyDeserializer,
-                                                       TypeDeserializer elementTypeDeserializer,
-                                                       ValueDeserializer<?> elementDeserializer);
+    abstract MaplikeDeserializer<T> createDeserializer(KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer);
 
     @Override
     public ValueDeserializer<?> createContextual(DeserializationContext context, BeanProperty property) throws DatabindException {
-        KeyDeserializer keyDeser = keyDeserializer;
-        if (keyDeser == null) {
-            keyDeser = context.findKeyDeserializer(mapType.getKeyType(), property);
-        } else if (keyDeser instanceof ContextualKeyDeserializer) {
-            keyDeser = ((ContextualKeyDeserializer) keyDeser).createContextual(context, property);
-        }
-
-        TypeDeserializer elementTypeDeser = elementTypeDeserializer;
-        if (elementTypeDeser != null) {
-            elementTypeDeser = elementTypeDeser.forProperty(property);
-        }
-        ValueDeserializer<?> elementDeser = elementDeserializer;
-        if (elementDeser == null) {
-            elementDeser = context.findContextualValueDeserializer(mapType.getContentType(), property);
-        } else {
-            elementDeser = context.handleSecondaryContextualization(elementDeser, property, mapType.getContentType());
-        }
-        return createDeserializer(keyDeser, elementTypeDeser, elementDeser);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

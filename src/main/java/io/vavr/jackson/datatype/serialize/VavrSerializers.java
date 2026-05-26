@@ -50,68 +50,22 @@ public class VavrSerializers extends Serializers.Base {
     }
 
     @Override
-    public ValueSerializer<?> findSerializer(SerializationConfig config,
-                                            JavaType type, BeanDescription.Supplier beanDesc, JsonFormat.Value formatOverrides) {
-
-        Class<?> raw = type.getRawClass();
-        if (Either.class.isAssignableFrom(raw)) {
-            return new EitherSerializer(type);
-        }
-
-        if (Tuple.class.isAssignableFrom(raw)) {
-            return new TupleSerializer(type);
-        }
-
-        if (VavrModule.FUNCTION_TYPES.stream().anyMatch(t -> t.isAssignableFrom(raw))) {
-            return new SerializableSerializer<>(type);
-        }
-
-        return super.findSerializer(config, type, beanDesc, formatOverrides);
+    public ValueSerializer<?> findSerializer(SerializationConfig config, JavaType type, BeanDescription.Supplier beanDesc, JsonFormat.Value formatOverrides) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public ValueSerializer<?> findReferenceSerializer(SerializationConfig config,
-                                                     ReferenceType type, BeanDescription.Supplier beanDesc,
-                                                                             JsonFormat.Value formatOverrides, TypeSerializer contentTypeSerializer, ValueSerializer<Object> contentValueSerializer) {
-        Class<?> raw = type.getRawClass();
-        if (Lazy.class.isAssignableFrom(raw)) {
-            return new LazySerializer(type, type.getContentType(), contentTypeSerializer, contentValueSerializer);
-        }
-        if (Option.class.isAssignableFrom(raw)) {
-            return new OptionSerializer(type, type.getContentType(), contentTypeSerializer, contentValueSerializer, settings.useOptionInPlainFormat());
-        }
-        return super.findReferenceSerializer(config, type, beanDesc, formatOverrides, contentTypeSerializer, contentValueSerializer);
+    public ValueSerializer<?> findReferenceSerializer(SerializationConfig config, ReferenceType type, BeanDescription.Supplier beanDesc, JsonFormat.Value formatOverrides, TypeSerializer contentTypeSerializer, ValueSerializer<Object> contentValueSerializer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public ValueSerializer<?> findCollectionLikeSerializer(SerializationConfig config,
-                                                          CollectionLikeType collectionType, BeanDescription.Supplier beanDesc,
-                                                                                  JsonFormat.Value formatOverrides, TypeSerializer elementTypeSerializer, ValueSerializer<Object> elementValueSerializer) {
-        Class<?> raw = collectionType.getRawClass();
-        if (raw == CharSeq.class) {
-            return new CharSeqSerializer(collectionType);
-        }
-        if (Seq.class.isAssignableFrom(raw)) {
-            return new ArraySerializer<>(collectionType);
-        }
-        if (Set.class.isAssignableFrom(raw)) {
-            return new ArraySerializer<>(collectionType);
-        }
-        if (PriorityQueue.class.isAssignableFrom(raw)) {
-            return new ArraySerializer<>(collectionType);
-        }
-        return super.findCollectionLikeSerializer(config, collectionType, beanDesc, formatOverrides, elementTypeSerializer, elementValueSerializer);
+    public ValueSerializer<?> findCollectionLikeSerializer(SerializationConfig config, CollectionLikeType collectionType, BeanDescription.Supplier beanDesc, JsonFormat.Value formatOverrides, TypeSerializer elementTypeSerializer, ValueSerializer<Object> elementValueSerializer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueSerializer<?> findMapLikeSerializer(SerializationConfig config, MapLikeType type, BeanDescription.Supplier beanDesc, JsonFormat.Value formatOverrides, ValueSerializer<Object> keySerializer, TypeSerializer elementTypeSerializer, ValueSerializer<Object> elementValueSerializer) {
-            Class<?> raw = type.getRawClass();
-            if (Map.class.isAssignableFrom(raw)) {
-                return new MapSerializer(type);
-            }
-            if (Multimap.class.isAssignableFrom(raw)) {
-                return new MultimapSerializer(type);
-            }
-            return super.findMapLikeSerializer(config, type, beanDesc, formatOverrides, keySerializer, elementTypeSerializer, elementValueSerializer);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

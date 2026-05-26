@@ -31,8 +31,7 @@ import tools.jackson.databind.jsontype.TypeDeserializer;
 
 class PriorityQueueDeserializer extends ArrayDeserializer<PriorityQueue<?>> {
 
-    PriorityQueueDeserializer(JavaType collectionType, JavaType elementType, TypeDeserializer elementTypeDeserializer,
-                              ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
+    PriorityQueueDeserializer(JavaType collectionType, JavaType elementType, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer, boolean deserializeNullAsEmptyCollection) {
         super(collectionType, 1, elementType, elementTypeDeserializer, elementDeserializer, deserializeNullAsEmptyCollection);
     }
 
@@ -43,23 +42,18 @@ class PriorityQueueDeserializer extends ArrayDeserializer<PriorityQueue<?>> {
      * @param elementTypeDeserializer the new deserializer for the element type
      * @param elementDeserializer     the new deserializer for the element itself
      */
-    PriorityQueueDeserializer(PriorityQueueDeserializer origin, TypeDeserializer elementTypeDeserializer,
-                              ValueDeserializer<?> elementDeserializer) {
-        this(origin.collectionType, origin.elementType, elementTypeDeserializer, elementDeserializer,
-            origin.deserializeNullAsEmptyCollection);
+    PriorityQueueDeserializer(PriorityQueueDeserializer origin, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
+        this(origin.collectionType, origin.elementType, elementTypeDeserializer, elementDeserializer, origin.deserializeNullAsEmptyCollection);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     PriorityQueue<?> create(List<Object> list, DeserializationContext ctxt) throws DatabindException {
-        checkContainedTypeIsComparable(ctxt, collectionType.containedTypeOrUnknown(0));
-        return PriorityQueue.ofAll((Comparator<Object> & Serializable) (o1, o2) -> ((Comparable) o1).compareTo(o2), list);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     ArrayDeserializer<PriorityQueue<?>> createDeserializer(TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
-        return new PriorityQueueDeserializer(this, elementTypeDeserializer, elementDeserializer);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
-
 }

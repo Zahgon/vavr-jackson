@@ -35,9 +35,7 @@ class SerializableDeserializer<T> extends StdDeserializer<T> {
 
     @Override
     public T deserialize(JsonParser p, DeserializationContext ctxt) {
-        ValueDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(ctxt.constructType(byte[].class));
-        byte[] bytes = (byte[]) deserializer.deserialize(p, ctxt);
-        return deserialize(bytes);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @SuppressWarnings("unchecked")

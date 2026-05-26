@@ -31,8 +31,11 @@ import tools.jackson.databind.jsontype.TypeDeserializer;
 class LazyDeserializer extends VavrValueDeserializer<Lazy<?>> {
 
     private final JavaType fullType;
+
     private final JavaType valueType;
+
     private final TypeDeserializer valueTypeDeserializer;
+
     private final ValueDeserializer<?> valueDeserializer;
 
     LazyDeserializer(JavaType fullType, JavaType valueType, TypeDeserializer typeDeser, ValueDeserializer<?> valueDeser) {
@@ -49,24 +52,16 @@ class LazyDeserializer extends VavrValueDeserializer<Lazy<?>> {
 
     @Override
     public Lazy<?> deserialize(JsonParser p, DeserializationContext ctxt) {
-        Object value = valueTypeDeserializer == null
-            ? valueDeserializer.deserialize(p, ctxt)
-            : valueDeserializer.deserializeWithType(p, ctxt, valueTypeDeserializer);
-        return Lazy.of(() -> value);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Lazy<?> getNullValue(DeserializationContext ctxt) {
-        return Lazy.of(() -> null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws DatabindException {
-        TypeDeserializer typeDeser = valueTypeDeserializer != null ? valueTypeDeserializer.forProperty(property) : null;
-        ValueDeserializer<?> deser = valueDeserializer == null
-            ? ctxt.findContextualValueDeserializer(valueType, property)
-            : ctxt.handleSecondaryContextualization(valueDeserializer, property, valueType);
-
-        return new LazyDeserializer(this, typeDeser, deser);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

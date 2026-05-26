@@ -32,10 +32,15 @@ import tools.jackson.databind.jsontype.TypeDeserializer;
 class OptionDeserializer<T> extends VavrValueDeserializer<Option<T>> {
 
     private final JavaType fullType;
+
     private final JavaType valueType;
+
     private final boolean plainMode;
+
     private final TypeDeserializer valueTypeDeserializer;
+
     private final ValueDeserializer<T> valueDeserializer;
+
     private ValueDeserializer<?> stringDeserializer;
 
     OptionDeserializer(JavaType fullType, JavaType valueType, TypeDeserializer typeDeser, ValueDeserializer<T> valueDeser, boolean plainMode) {
@@ -54,91 +59,27 @@ class OptionDeserializer<T> extends VavrValueDeserializer<Option<T>> {
 
     @Override
     public Option<T> deserialize(JsonParser p, DeserializationContext ctxt, Option<T> intoValue) {
-        if (plainMode) {
-            if (valueTypeDeserializer == null) {
-                return Boolean.TRUE.equals(valueDeserializer.supportsUpdate(ctxt.getConfig())) && intoValue != null
-                    ? Option.of(valueDeserializer.deserialize(p, ctxt, intoValue.getOrElse((T) null)))
-                    : Option.of(valueDeserializer.deserialize(p, ctxt));
-            } else {
-                return Boolean.TRUE.equals(valueDeserializer.supportsUpdate(ctxt.getConfig())) && intoValue != null
-                    ? Option.of((T) valueDeserializer.deserializeWithType(p, ctxt, valueTypeDeserializer, intoValue.getOrElse((T) null)))
-                    : Option.of((T) valueDeserializer.deserializeWithType(p, ctxt, valueTypeDeserializer));
-            }
-        }
-        boolean defined = false;
-        T value = null;
-        int cnt = 0;
-        while (p.nextToken() != JsonToken.END_ARRAY) {
-            cnt++;
-            switch (cnt) {
-                case 1:
-                    JsonToken currentToken = p.currentToken();
-                    String def = (String) stringDeserializer.deserialize(p, ctxt);
-                    if ("defined".equals(def)) {
-                        defined = true;
-                    } else if ("undefined".equals(def)) {
-                        defined = false;
-                    } else {
-                        throw mappingException(ctxt, fullType.getRawClass(), currentToken);
-                    }
-                    break;
-                case 2:
-                    if (valueTypeDeserializer == null) {
-                        value = Boolean.TRUE.equals(valueDeserializer.supportsUpdate(ctxt.getConfig())) && intoValue != null
-                            ? valueDeserializer.deserialize(p, ctxt, intoValue.getOrElse((T) null))
-                            : valueDeserializer.deserialize(p, ctxt);
-                    } else {
-                        value = Boolean.TRUE.equals(valueDeserializer.supportsUpdate(ctxt.getConfig())) && intoValue != null
-                            ? (T) valueDeserializer.deserializeWithType(p, ctxt, valueTypeDeserializer, intoValue.getOrElse((T) null))
-                            : (T) valueDeserializer.deserializeWithType(p, ctxt, valueTypeDeserializer);
-                    }
-                    break;
-            }
-        }
-        if (defined) {
-            if (cnt != 2) {
-                throw mappingException(ctxt, fullType.getRawClass(), null);
-            }
-            return Option.some(value);
-        } else {
-            if (cnt != 1) {
-                throw mappingException(ctxt, fullType.getRawClass(), null);
-            }
-            return Option.none();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Option<T> deserialize(JsonParser p, DeserializationContext ctxt) {
-        return deserialize(p, ctxt, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void resolve(DeserializationContext ctxt) throws DatabindException {
-        super.resolve(ctxt);
-        stringDeserializer = ctxt.findContextualValueDeserializer(ctxt.constructType(String.class), null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Option<T> getNullValue(DeserializationContext ctxt) {
-        return Option.none();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws DatabindException {
-        ValueDeserializer<?> deser = valueDeserializer;
-        TypeDeserializer typeDeser = valueTypeDeserializer;
-        JavaType refType = valueType;
-
-        if (deser == null) {
-            deser = ctxt.findContextualValueDeserializer(refType, property);
-        } else { // otherwise directly assigned, probably not contextual yet:
-            deser = ctxt.handleSecondaryContextualization(deser, property, refType);
-        }
-        if (typeDeser != null) {
-            typeDeser = typeDeser.forProperty(property);
-        }
-        return withResolved(refType, typeDeser, deser);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     /**

@@ -50,6 +50,7 @@ import tools.jackson.databind.util.NameTransformer;
 class UnwrappingOptionSerializer extends StdSerializer<Option<?>> {
 
     private final OptionSerializer optionSerializer;
+
     private final NameTransformer unwrapper;
 
     public UnwrappingOptionSerializer(OptionSerializer optionSerializer, NameTransformer unwrapper) {
@@ -69,38 +70,21 @@ class UnwrappingOptionSerializer extends StdSerializer<Option<?>> {
      */
     @Override
     public void serialize(Option<?> value, JsonGenerator gen, SerializationContext context) {
-            if (value.isDefined()) {
-                JavaType containedType = optionSerializer.getValueType();
-                ValueSerializer<?> ser = containedType != null && containedType.hasGenericTypes()
-                    ? context.findTypedValueSerializer(context.constructSpecializedType(containedType, value.get().getClass()), true)
-                    : context.findTypedValueSerializer(value.get().getClass(), true);
-
-                if (ser instanceof BeanSerializerBase beanSerializerBase) {
-                    beanSerializerBase.unwrappingSerializer(unwrapper).serialize(value.get(), gen, context);
-                } else {
-                    throw new StreamWriteException(gen, "Cannot unwrap a non-bean object");
-                }
-            } else {
-                gen.writeNull();
-            }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isUnwrappingSerializer() {
-        return true;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isEmpty(SerializationContext context, Option<?> value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueSerializer<?> createContextual(SerializationContext context, BeanProperty property) throws DatabindException {
-        ValueSerializer<?> contextualized = optionSerializer.createContextual(context, property);
-        if (contextualized instanceof OptionSerializer contextualizedOption) {
-            return new UnwrappingOptionSerializer(contextualizedOption, unwrapper);
-        }
-        return contextualized;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

@@ -35,23 +35,6 @@ abstract class HListSerializer<T> extends StdSerializer<T> {
     }
 
     void write(Object val, int containedTypeIndex, JsonGenerator gen, SerializationContext context) {
-        if (val != null) {
-            if (type.containedTypeCount() > containedTypeIndex) {
-                ValueSerializer<Object> ser;
-                JavaType containedType = type.containedType(containedTypeIndex);
-                if (containedType != null && containedType.hasGenericTypes()) {
-                    JavaType st = context.constructSpecializedType(containedType, val.getClass());
-                    ser = context.findTypedValueSerializer(st, true);
-                } else {
-                    ser = context.findTypedValueSerializer(val.getClass(), true);
-                }
-                ser.serialize(val, gen, context);
-            } else {
-                gen.writePOJO(val);
-            }
-        } else {
-            gen.writeNull();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
-
 }

@@ -35,17 +35,11 @@ class SerializableSerializer<T> extends VavrValueSerializer<T> {
 
     @Override
     Object toJavaObj(T value) throws JacksonException {
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        try (ObjectOutputStream stream = new ObjectOutputStream(buf)) {
-            stream.writeObject(value);
-        } catch (IOException e) {
-            throw JacksonIOException.construct(e);
-        }
-        return buf.toByteArray();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     JavaType emulatedJavaType(TypeFactory typeFactory) {
-        return typeFactory.constructArrayType(byte.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

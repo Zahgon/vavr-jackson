@@ -44,24 +44,21 @@ class MapSerializer extends VavrValueSerializer<Map<?, ?>> {
 
     @Override
     Object toJavaObj(Map<?, ?> value) {
-        return value.toJavaMap();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     JavaType emulatedJavaType(TypeFactory typeFactory) {
-        return typeFactory.constructMapType(LinkedHashMap.class, mapType.getKeyType(), mapType.getContentType());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isEmpty(SerializationContext context, Map<?, ?> value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueSerializer<?> createContextual(SerializationContext context, BeanProperty property) throws DatabindException {
-        if (property == beanProperty) {
-            return this;
-        }
-        return new MapSerializer(mapType, property);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

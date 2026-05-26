@@ -58,47 +58,26 @@ class ArraySerializer<T extends Value<?>> extends VavrValueSerializer<T> {
 
     @Override
     Object toJavaObj(T value) {
-        return value.toJavaList();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     JavaType emulatedJavaType(TypeFactory typeFactory) {
-        return typeFactory.constructCollectionType(ArrayList.class, collectionType.getContentType());
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public void serializeWithType(T value, JsonGenerator gen, SerializationContext context,
-                                  TypeSerializer typeSer) {
-        typeSer.writeTypePrefix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
-        List<?> list = value.toJavaList();
-        JavaType contentType = collectionType.getContentType();
-        for (Object item : list) {
-            if (item == null) {
-                gen.writeNull();
-            } else {
-                ValueSerializer<Object> ser;
-                if (contentType != null && !contentType.isJavaLangObject()) {
-                    ser = context.findPrimaryPropertySerializer(contentType, beanProperty);
-                } else {
-                    ser = context.findPrimaryPropertySerializer(item.getClass(), beanProperty);
-                }
-                ser.serialize(item, gen, context);
-            }
-        }
-        typeSer.writeTypeSuffix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
+    public void serializeWithType(T value, JsonGenerator gen, SerializationContext context, TypeSerializer typeSer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isEmpty(SerializationContext context, T value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public ValueSerializer<?> createContextual(SerializationContext context, BeanProperty property)
-        throws DatabindException {
-        if (property == beanProperty) {
-            return this;
-        }
-        return new ArraySerializer<>(this, property);
+    public ValueSerializer<?> createContextual(SerializationContext context, BeanProperty property) throws DatabindException {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

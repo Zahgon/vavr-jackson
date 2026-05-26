@@ -35,8 +35,11 @@ import tools.jackson.databind.jsontype.TypeSerializer;
 class LazySerializer extends HListSerializer<Lazy<?>> {
 
     private final JavaType fullType;
+
     private final JavaType valueType;
+
     private final TypeSerializer valueTypeSerializer;
+
     private final ValueSerializer<Object> valueSerializer;
 
     @SuppressWarnings("unchecked")
@@ -50,47 +53,17 @@ class LazySerializer extends HListSerializer<Lazy<?>> {
 
     @Override
     public void serialize(Lazy<?> value, JsonGenerator gen, SerializationContext context) {
-        if (valueSerializer != null) {
-            if (valueTypeSerializer != null) {
-                valueSerializer.serializeWithType(value.get(), gen, context, valueTypeSerializer);
-            } else {
-                valueSerializer.serialize(value.get(), gen, context);
-            }
-        } else {
-            write(value.get(), 0, gen, context);
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public void serializeWithType(Lazy<?> value, JsonGenerator gen, SerializationContext context,
-                                  TypeSerializer typeSer) {
-        Object inner = value.get();
-        if (valueSerializer != null) {
-            valueSerializer.serializeWithType(inner, gen, context, typeSer);
-        } else {
-            context.findTypedValueSerializer(inner.getClass(), true)
-                .serializeWithType(inner, gen, context, typeSer);
-        }
+    public void serializeWithType(Lazy<?> value, JsonGenerator gen, SerializationContext context, TypeSerializer typeSer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueSerializer<?> createContextual(SerializationContext provider, BeanProperty property) throws DatabindException {
-        TypeSerializer vts = valueTypeSerializer;
-        if (vts != null) {
-            vts = vts.forProperty(provider, property);
-        }
-        ValueSerializer<?> ser = findAnnotatedContentSerializer(provider, property);
-        if (ser == null) {
-            ser = valueSerializer;
-            if (ser == null) {
-                if (useStatic(provider, property, valueType)) {
-                    ser = provider.findPrimaryPropertySerializer(valueType, property);
-                }
-            } else {
-                ser = provider.handlePrimaryContextualization(ser, property);
-            }
-        }
-        return new LazySerializer(fullType, valueType, vts, ser);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private boolean useStatic(SerializationContext context, BeanProperty property, JavaType referredType) {
@@ -103,7 +76,8 @@ class LazySerializer extends HListSerializer<Lazy<?>> {
             return false;
         }
         // but if type is final, might as well fetch
-        if (referredType.isFinal()) { // or should we allow annotation override? (only if requested...)
+        if (referredType.isFinal()) {
+            // or should we allow annotation override? (only if requested...)
             return true;
         }
         // also: if indicated by typing, should be considered static

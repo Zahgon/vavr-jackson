@@ -57,87 +57,27 @@ class OptionSerializer extends HListSerializer<Option<?>> {
     }
 
     JavaType getValueType() {
-        return valueType;
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void serialize(Option<?> value, JsonGenerator gen, SerializationContext context) {
-        if (plainMode) {
-            if (value.isDefined()) {
-                if (valueSerializer != null) {
-                    if (valueTypeSerializer != null) {
-                        valueSerializer.serializeWithType(value.get(), gen, context, valueTypeSerializer);
-                    } else {
-                        valueSerializer.serialize(value.get(), gen, context);
-                    }
-                } else {
-                    write(value.get(), 0, gen, context);
-                }
-            } else {
-                gen.writeNull();
-            }
-        } else {
-            gen.writeStartArray();
-            if (value.isDefined()) {
-                gen.writeString("defined");
-                write(value.get(), 0, gen, context);
-            } else {
-                gen.writeString("undefined");
-            }
-            gen.writeEndArray();
-        }
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
-    public void serializeWithType(Option<?> value, JsonGenerator gen, SerializationContext context,
-                                  TypeSerializer typeSer) {
-        if (plainMode) {
-            if (value.isDefined()) {
-                Object inner = value.get();
-                if (valueSerializer != null) {
-                    valueSerializer.serializeWithType(inner, gen, context, typeSer);
-                } else {
-                    context.findTypedValueSerializer(inner.getClass(), true)
-                        .serializeWithType(inner, gen, context, typeSer);
-                }
-            } else {
-                gen.writeNull();
-            }
-        } else {
-            typeSer.writeTypePrefix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
-            if (value.isDefined()) {
-                gen.writeString("defined");
-                write(value.get(), 0, gen, context);
-            } else {
-                gen.writeString("undefined");
-            }
-            typeSer.writeTypeSuffix(gen, context, typeSer.typeId(value, JsonToken.START_ARRAY));
-        }
+    public void serializeWithType(Option<?> value, JsonGenerator gen, SerializationContext context, TypeSerializer typeSer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isEmpty(SerializationContext provider, Option<?> value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public ValueSerializer<?> createContextual(SerializationContext provider, BeanProperty property) throws DatabindException {
-        TypeSerializer vts = valueTypeSerializer;
-        if (vts != null) {
-            vts = vts.forProperty(provider, property);
-        }
-        ValueSerializer<?> ser = findAnnotatedContentSerializer(provider, property);
-        if (ser == null) {
-            ser = valueSerializer;
-            if (ser == null) {
-                if (useStatic(provider, property, valueType)) {
-                    ser = provider.findPrimaryPropertySerializer(valueType, property);
-                }
-            } else {
-                ser = provider.handlePrimaryContextualization(ser, property);
-            }
-        }
-        return withResolved(fullType, vts, ser);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     private boolean useStatic(SerializationContext context, BeanProperty property, JavaType referredType) {
@@ -150,7 +90,8 @@ class OptionSerializer extends HListSerializer<Option<?>> {
             return false;
         }
         // but if type is final, might as well fetch
-        if (referredType.isFinal()) { // or should we allow annotation override? (only if requested...)
+        if (referredType.isFinal()) {
+            // or should we allow annotation override? (only if requested...)
             return true;
         }
         // also: if indicated by typing, should be considered static
@@ -184,6 +125,6 @@ class OptionSerializer extends HListSerializer<Option<?>> {
 
     @Override
     public ValueSerializer<Option<?>> unwrappingSerializer(NameTransformer unwrapper) {
-        return new UnwrappingOptionSerializer(this, unwrapper);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

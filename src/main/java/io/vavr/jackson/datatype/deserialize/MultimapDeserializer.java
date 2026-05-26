@@ -40,49 +40,27 @@ class MultimapDeserializer extends MaplikeDeserializer<Multimap<?, ?>> {
 
     private ValueDeserializer<?> containerDeserializer;
 
-    MultimapDeserializer(MapLikeType mapType, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer,
-                         ValueDeserializer<?> elementDeserializer) {
+    MultimapDeserializer(MapLikeType mapType, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
         super(mapType, keyDeserializer, elementTypeDeserializer, elementDeserializer);
     }
 
-    MultimapDeserializer(MultimapDeserializer origin, KeyDeserializer keyDeserializer,
-                         TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
+    MultimapDeserializer(MultimapDeserializer origin, KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
         super(origin.mapType, keyDeserializer, elementTypeDeserializer, elementDeserializer);
         containerDeserializer = origin.containerDeserializer;
     }
 
     @Override
-    MultimapDeserializer createDeserializer(KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer,
-                                            ValueDeserializer<?> elementDeserializer) {
-        return new MultimapDeserializer(this, keyDeserializer, elementTypeDeserializer, elementDeserializer);
+    MultimapDeserializer createDeserializer(KeyDeserializer keyDeserializer, TypeDeserializer elementTypeDeserializer, ValueDeserializer<?> elementDeserializer) {
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public void resolve(DeserializationContext ctxt) throws DatabindException {
-        JavaType containerType = ctxt.getTypeFactory()
-            .constructCollectionType(ArrayList.class, mapType.getContentType());
-        containerDeserializer = ctxt.findContextualValueDeserializer(containerType, null);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public Multimap<?, ?> deserialize(JsonParser p, DeserializationContext ctxt) {
-        final java.util.List<Tuple2<Object, Object>> result = new java.util.ArrayList<>();
-        while (p.nextToken() != JsonToken.END_OBJECT) {
-            String name = p.currentName();
-            Object key = keyDeserializer.deserializeKey(name, ctxt);
-            p.nextToken();
-            ArrayList<?> list = (ArrayList<?>) containerDeserializer.deserialize(p, ctxt);
-            for (Object elem : list) {
-                result.add(Tuple.of(key, elem));
-            }
-        }
-        if (TreeMultimap.class.isAssignableFrom(handledType())) {
-            return TreeMultimap.withSeq().ofEntries(keyComparator, result);
-        }
-        if (LinkedHashMultimap.class.isAssignableFrom(handledType())) {
-            return LinkedHashMultimap.withSeq().ofEntries(result);
-        }
-        // default deserialization [...] -> Map
-        return HashMultimap.withSeq().ofEntries(result);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }

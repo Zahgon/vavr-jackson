@@ -24,7 +24,6 @@ import tools.jackson.databind.JavaType;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.type.TypeFactory;
 
-
 class CharSeqSerializer extends VavrValueSerializer<CharSeq> {
 
     CharSeqSerializer(JavaType type) {
@@ -33,16 +32,16 @@ class CharSeqSerializer extends VavrValueSerializer<CharSeq> {
 
     @Override
     Object toJavaObj(CharSeq value) {
-        return value.toString();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     JavaType emulatedJavaType(TypeFactory typeFactory) {
-        return typeFactory.constructType(String.class);
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 
     @Override
     public boolean isEmpty(SerializationContext context, CharSeq value) {
-        return value.isEmpty();
+        throw new UnsupportedOperationException("STUB: not implemented");
     }
 }
